@@ -2,23 +2,59 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/constraintLayout2"
+    android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:backgroundTint="@color/white"
+    tools:context=".SecondFragment">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="176dp"
-        android:layout_marginTop="332dp"
-        android:layout_marginEnd="203dp"
-        android:layout_marginBottom="380dp"
-        android:text="Hello"
-        android:textColor="#A81616"
+    <!-- TODO: Update blank fragment layout -->
+
+    <Button
+        android:id="@+id/GameAButton"
+        android:layout_width="124dp"
+        android:layout_height="68dp"
+        android:backgroundTint="#A11111"
+        android:text="Game A"
+        app:layout_constraintBottom_toTopOf="@+id/GameBButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/GameBButton"
+        android:layout_width="124dp"
+        android:layout_height="68dp"
+        android:backgroundTint="#A11111"
+        android:text="Game B"
+        app:layout_constraintBottom_toTopOf="@+id/ScoreButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/GameAButton" />
+
+    <Button
+        android:id="@+id/ScoreButton"
+        android:layout_width="142dp"
+        android:layout_height="68dp"
+        android:backgroundTint="#A11111"
+        android:text="Show Score"
+        app:layout_constraintBottom_toTopOf="@+id/button4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/GameBButton" />
+
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="193dp"
+        android:layout_height="68dp"
+        android:backgroundTint="#A11111"
+        android:text="Back to Welcome"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/ScoreButton" />
 </androidx.constraintlayout.widget.ConstraintLayout>
