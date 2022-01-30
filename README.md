@@ -9,7 +9,7 @@ develop the application using either Kotlin of Java (no additional tools). Your 
     - Game A: a quiz game ( question and multiple choice game),
     - Game B: A count the sheep randomly appearing on the screen in a minute.
     - Show score ( shows the score of the last game played for Games A and B)
-    -Back to Welcome (goes to the first screen with the buttons if you are not using a menu).
+    - Back to Welcome (goes to the first screen with the buttons if you are not using a menu).
 
 3. Implement Game A: Randomly generated 5 multiple choice questions displayed one at a
 time (about movies, news, etc) with an Ok button.
