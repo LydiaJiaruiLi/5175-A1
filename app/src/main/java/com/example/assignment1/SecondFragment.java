@@ -16,10 +16,10 @@ import android.widget.Button;
  * create an instance of this fragment.
  */
 public class SecondFragment extends Fragment implements View.OnClickListener{
-    Button buttonA;
-    Button buttonB;
-    Button buttonScore;
-    Button buttonBack;
+//    Button buttonA;
+//    Button buttonB;
+//    Button buttonScore;
+//    Button buttonBack;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -69,7 +69,8 @@ public class SecondFragment extends Fragment implements View.OnClickListener{
 
         view.findViewById(R.id.GameAButton).setOnClickListener(this);
         view.findViewById(R.id.GameBButton).setOnClickListener(this);
-
+        view.findViewById(R.id.ScoreButton).setOnClickListener(this);
+        view.findViewById(R.id.BackButton).setOnClickListener(this);
         return view;
     }
 
@@ -82,6 +83,11 @@ public class SecondFragment extends Fragment implements View.OnClickListener{
             case R.id.GameBButton:
                 Navigation.findNavController(view).navigate(R.id.action_secondFragment_to_gameBFragment);
                 break;
+            case R.id.ScoreButton:
+                Navigation.findNavController(view).navigate(R.id.action_secondFragment_to_scoreFragment);
+                break;
+            case R.id.BackButton:
+                Navigation.findNavController(view).popBackStack();
         }
 
     }
