@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout2"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".GameBFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="322dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="42dp"
+        android:layout_marginTop="668dp"
+        android:layout_marginEnd="42dp"
+        android:layout_marginBottom="3dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.6"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <Button
+            android:id="@+id/StartGameBButton"
+            android:layout_width="323dp"
+            android:layout_height="66dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/red"
+            android:text="Start" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/imageFrame"
+        android:layout_width="409dp"
+        android:layout_height="666dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/animalImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </FrameLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
