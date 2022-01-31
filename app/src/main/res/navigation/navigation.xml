@@ -3,17 +3,52 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/fragment1">
+    app:startDestination="@id/firstFragment">
     <fragment
-        android:id="@+id/fragment1"
-        android:name="com.example.assignment1.Fragment1"
-        android:label="Fragment1" >
+        android:id="@+id/firstFragment"
+        android:name="com.example.assignment1.FirstFragment"
+        android:label="FirstFragment" >
         <action
-            android:id="@+id/action_fragment1_to_fragment2"
-            app:destination="@id/fragment2" />
+            android:id="@+id/action_firstFragment_to_secondFragment"
+            app:destination="@id/secondFragment" />
     </fragment>
     <fragment
-        android:id="@+id/fragment2"
-        android:name="com.example.assignment1.Fragment2"
-        android:label="Fragment2" />
+        android:id="@+id/secondFragment"
+        android:name="com.example.assignment1.SecondFragment"
+        android:label="fragment_second"
+        tools:layout="@layout/fragment_second" >
+        <action
+            android:id="@+id/action_secondFragment_to_gameAFragment"
+            app:destination="@id/gameAFragment" />
+        <action
+            android:id="@+id/action_secondFragment_to_gameBFragment"
+            app:destination="@id/gameBFragment" />
+        <action
+            android:id="@+id/action_secondFragment_to_scoreFragment"
+            app:destination="@id/scoreFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/gameAFragment"
+        android:name="com.example.assignment1.GameAFragment"
+        android:label="fragment_game_a"
+        tools:layout="@layout/fragment_game_a" />
+    <fragment
+        android:id="@+id/gameBFragment"
+        android:name="com.example.assignment1.GameBFragment"
+        android:label="fragment_game_b"
+        tools:layout="@layout/fragment_game_b" >
+        <action
+            android:id="@+id/action_gameBFragment_to_gameBScoreFragment"
+            app:destination="@id/gameBScoreFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/scoreFragment"
+        android:name="com.example.assignment1.ScoreFragment"
+        android:label="fragment_score"
+        tools:layout="@layout/fragment_score" />
+    <fragment
+        android:id="@+id/gameBScoreFragment2"
+        android:name="com.example.assignment1.GameBScoreFragment"
+        android:label="fragment_game_b_score"
+        tools:layout="@layout/fragment_game_b_score" />
 </navigation>
