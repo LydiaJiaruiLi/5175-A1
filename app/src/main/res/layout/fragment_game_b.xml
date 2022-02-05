@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/frameLayout2"
+    android:id="@+id/frameGameB"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
@@ -10,7 +10,7 @@
 
     <!-- TODO: Update blank fragment layout -->
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/linearLayout"
         android:layout_width="322dp"
         android:layout_height="60dp"
@@ -18,7 +18,6 @@
         android:layout_marginTop="668dp"
         android:layout_marginEnd="42dp"
         android:layout_marginBottom="3dp"
-        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.6"
@@ -29,11 +28,14 @@
         <Button
             android:id="@+id/StartGameBButton"
             android:layout_width="323dp"
-            android:layout_height="66dp"
-            android:layout_weight="1"
+            android:layout_height="60dp"
             android:backgroundTint="@color/red"
-            android:text="Start" />
-    </LinearLayout>
+            android:text="Start"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <FrameLayout
         android:id="@+id/imageFrame"
@@ -47,7 +49,9 @@
         <ImageView
             android:id="@+id/animalImageView"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            app:srcCompat="@drawable/bunny" />
     </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

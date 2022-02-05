@@ -1,21 +1,15 @@
 package com.example.assignment1;
 
-import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.Navigation;
 
 import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
@@ -28,7 +22,12 @@ import java.util.Random;
  */
 public class GameBFragment extends Fragment implements View.OnClickListener {
 
-    private ImageView image = null;
+    private ImageView imageView = null;
+    private FrameLayout fr = null;
+    private int imgFrameWidth;
+    private int imgFrameHeight;
+    private int imgWidth;
+    private int imgHeight;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -79,46 +78,73 @@ public class GameBFragment extends Fragment implements View.OnClickListener {
 
         view.findViewById(R.id.StartGameBButton).setOnClickListener(this);
 
-        image = (ImageView) view.findViewById(R.id.animalImageView);
+        imageView = (ImageView) view.findViewById(R.id.animalImageView);
 
-        FrameLayout fr = (FrameLayout) view.findViewById(R.id.imageFrame);
-        fr.post(new Runnable() {
-            @Override
-            public void run() {
-                int width = fr.getMeasuredWidth();
-                int height = fr.getMeasuredHeight();
+        fr = (FrameLayout) view.findViewById(R.id.imageFrame);
+        imgFrameWidth = fr.getLayoutParams().width;
+        imgFrameHeight = fr.getLayoutParams().height;
 
-                System.out.println(width);
-                System.out.println(height);
-            }
-        });
+        imgWidth = imageView.getDrawable().getIntrinsicWidth();
+        imgHeight = imageView.getDrawable().getIntrinsicHeight();
+
         return view;
     }
 
+    int counter;
+    boolean stop;
     @Override
     public void onClick(View view){
-        Random random = new Random();
+        counter = 1;
+        stop = false;
+        displayAnimal();
 
         // move to score page after 1 minutes
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Navigation.findNavController(view).navigate(R.id.action_gameBFragment_to_gameBScoreFragment);
+                stop = true;
+                System.out.println(counter);
+                moveToAnswerPage(view, counter);
             }
-        }, 60000);
+        }, 4000);
+
+    }
+
+    private void displayAnimal(){
+
+        imageView.setVisibility(View.VISIBLE);
+        Random random = new Random();
 
         int min = 1;
         int max = 3;
 
         // random generate 1-3 seconds
-        int randomTimer = (random.nextInt((max - min) + 1) + min) * 1000;
-        System.out.println(randomTimer);
+        int randomTimer = random.nextInt((max - min) + 1) + min;
 
+        int randomPosX = random.nextInt(imgFrameWidth - imgWidth);
+        int randomPosY = random.nextInt(imgFrameHeight - imgHeight);
+        imageView.setX(randomPosX);
+        imageView.setY(randomPosY);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                image.setImageResource(R.drawable.bunny);
+                if (!stop){
+                    counter++;
+                    imageView.setVisibility(View.INVISIBLE);
+                    displayAnimal();
+                }else{
+                    stop = true;
+                }
             }
-        }, randomTimer);
+        }, randomTimer * 1000);
     }
+
+    private void moveToAnswerPage(View view, int actualAmount){
+        Bundle actual = new Bundle();
+        actual.putInt("actualAmount", actualAmount);
+
+        Navigation.findNavController(view).navigate(R.id.action_gameBFragment_to_gameBAnswerFragment, actual);
+
+    }
+
 }
