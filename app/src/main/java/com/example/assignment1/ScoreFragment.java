@@ -1,12 +1,15 @@
 package com.example.assignment1;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -46,6 +49,8 @@ public class ScoreFragment extends Fragment {
         return fragment;
     }
 
+    int gameBUserInput;
+    int gameBActualAmount;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,12 +58,31 @@ public class ScoreFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        Bundle input = getArguments();
+        if (input != null) {
+            gameBUserInput = input.getInt("userInput");
+            gameBActualAmount = input.getInt("actualAmount");
+        }
+        System.out.println(gameBActualAmount + "/" + gameBUserInput);
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_score, container, false);
+        View view = inflater.inflate(R.layout.fragment_score, container, false);
+
+//        TextView BScoreTextView = view.findViewById(R.id.scoreB);
+//        BScoreTextView.setText(gameBUserInput + "/" + gameBActualAmount);
+
+        return view;
     }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+    }
+
 }
