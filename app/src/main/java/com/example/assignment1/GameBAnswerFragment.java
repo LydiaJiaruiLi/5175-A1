@@ -96,7 +96,24 @@ public class GameBAnswerFragment extends Fragment implements View.OnClickListene
             args.putInt("actualAmount", actualAmount);
         }
 
+////        newFrg.setArguments(input); //data being send to SecondFragment
+//        Intent intent = new Intent(getActivity(), ScoreTrans.class);
+//        intent.putExtra("actualAmount", actualAmount);
+//        intent.putExtra("userInput", Integer.parseInt(userInput.getText().toString()));
+//        startActivity(intent);
 
+        Score score = new Score();
+        ScoreDBHandler dbHandler = new ScoreDBHandler(this.getContext(), null, null, 1);
+        if (userInput.getText() != null){
+            score = new Score(Integer.parseInt(userInput.getText().toString()) + "/" + actualAmount, 1);
+        }else{
+            score = new Score(0 + "/" + actualAmount, 1);
+        }
+
+        if (dbHandler.isExisted(1)){
+            dbHandler.deleteScore(1);
+        }
+        dbHandler.addScore(score);
         Navigation.findNavController(view).navigate(R.id.action_gameBAnswerFragment_to_gameBScoreFragment, args);
     }
 

@@ -49,8 +49,8 @@ public class ScoreFragment extends Fragment {
         return fragment;
     }
 
-    int gameBUserInput;
-    int gameBActualAmount;
+    String gameBScore;
+    String gameAScore;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,12 +59,21 @@ public class ScoreFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-        Bundle input = getArguments();
-        if (input != null) {
-            gameBUserInput = input.getInt("userInput");
-            gameBActualAmount = input.getInt("actualAmount");
+
+        ScoreDBHandler dbHandler = new ScoreDBHandler(this.getContext(), null, null, 1);
+
+
+        if (dbHandler.isExisted(1)) {
+            gameBScore = dbHandler.findScoreByGameId(1).getGameScore();
+        }else{
+            gameBScore = "0/0";
         }
-        System.out.println(gameBActualAmount + "/" + gameBUserInput);
+
+        if (dbHandler.isExisted(2)) {
+            gameAScore = dbHandler.findScoreByGameId(2).getGameScore();
+        }else{
+            gameAScore = "0/0";
+        }
 
     }
 
@@ -74,8 +83,11 @@ public class ScoreFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_score, container, false);
 
-//        TextView BScoreTextView = view.findViewById(R.id.scoreB);
-//        BScoreTextView.setText(gameBUserInput + "/" + gameBActualAmount);
+        TextView BScoreTextView = view.findViewById(R.id.scoreB);
+        TextView AScoreTextView = view.findViewById(R.id.scoreA);
+
+        BScoreTextView.setText(gameBScore);
+        AScoreTextView.setText(gameAScore);
 
         return view;
     }
