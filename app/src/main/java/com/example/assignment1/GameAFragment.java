@@ -1,5 +1,6 @@
 package com.example.assignment1;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -43,12 +44,10 @@ public class GameAFragment extends Fragment {
 
 
     TextView showQuestionTextView;
-    TextView Score_textView;
     RadioButton showselect1;
     RadioButton showselect2;
     RadioButton showselect3;
     RadioButton showselect4;
-    ConstraintLayout backgroud;
     RadioGroup radgroup;
     int finalScore = 0;
     int count = 0;
@@ -60,48 +59,26 @@ public class GameAFragment extends Fragment {
     private ArrayList<String> Q3 = new ArrayList(Arrays.asList("45+65=?", "115", "100", "120", "110", 4));
     private ArrayList<String> Q4 = new ArrayList(Arrays.asList("Where do swans live?", "In dessert", "In mountains", "In lakes", "In forest", 3));
     private ArrayList<String> Q5 = new ArrayList(Arrays.asList("Where is China?", "Europe", "Asia", "Africa", "North America", 2));
-    private Map<Integer, List> qList = Map.of(0, Q1, 1, Q2, 2, Q3, 3, Q4, 4, Q5);
-
-//
-//    public GameAFragment() {
-//        // Required empty public constructor
-//    }
-//
-//    /**
-//     * Use this factory method to create a new instance of
-//     * this fragment using the provided parameters.
-//     *
-//     * @param param1 Parameter 1.
-//     * @param param2 Parameter 2.
-//     * @return A new instance of fragment fragment_gameA.
-//     */
-//    // TODO: Rename and change types and number of parameters
-//    public static GameAFragment newInstance(String param1, String param2) {
-//        GameAFragment fragment = new GameAFragment();
-//        Bundle args = new Bundle();
-//        args.putString(ARG_PARAM1, param1);
-//        args.putString(ARG_PARAM2, param2);
-//        fragment.setArguments(args);
-//        return fragment;
-//    }
+    private ArrayList<String> Q6 = new ArrayList(Arrays.asList("45*5=?", "225", "215", "235", "245", 1));
+    private Map<Integer, List> qList = Map.of(0, Q1, 1, Q2, 2, Q3, 3, Q4, 4, Q5,5,Q6);
+    private ArrayList<String> colorlst = new ArrayList(Arrays.asList("#A11111", "#B2A11111", "#95FF5722", "#C4FF5722", "#FFFF5722"));
 
     private void loadquestion(View view) {
         if (count >= 5) {
             return;
         }
-//      set backgroud color
-//      view.setBackgroundColor(colorList[count])
+
         Random rand = new Random();
         int randInt = 0;
-        boolean[] bool = new boolean[5];
+        boolean[] bool = new boolean[6];
         for (int i = 0; i < 5; i++) {
             do {
-                randInt = rand.nextInt(5);
+                randInt = rand.nextInt(6);
             } while (bool[randInt]);
             bool[randInt] = true;
             numlist.add(randInt);
         }
-//        random select quesiton
+        //        random select quesiton
         String question_text = String.format("%s. %s", (count + 1), qList.get(numlist.get(count)).get(0));
         showQuestionTextView.setText(question_text);
 
@@ -113,18 +90,10 @@ public class GameAFragment extends Fragment {
         showselect3.setText(select3);
         String select4 = qList.get(numlist.get(count)).get(4).toString();
         showselect4.setText(select4);
-//        backgroud.setBackgroundColor(colorList[randnum1]));
-
+        //      set backgroud color
+        String color = colorlst.get(count);
+        view.setBackgroundColor(Color.parseColor(color));
     }
-//
-//    @Override
-//    public void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        if (getArguments() != null) {
-//            mParam1 = getArguments().getString(ARG_PARAM1);
-//            mParam2 = getArguments().getString(ARG_PARAM2);
-//        }
-//    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -144,38 +113,54 @@ public class GameAFragment extends Fragment {
 
     }
 
-    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        view.findViewById(R.id.Nextq_button).setOnClickListener(new View.OnClickListener() {
+    public void onViewCreated(@NonNull View view1, Bundle savedInstanceState) {
+        super.onViewCreated(view1, savedInstanceState);
+        view1.findViewById(R.id.Nextq_button).setVisibility(View.VISIBLE);
+        view1.findViewById(R.id.gotoscorebutton).setVisibility(View.GONE);
+
+        view1.findViewById(R.id.Nextq_button).setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 int radioBtns = radgroup.getCheckedRadioButtonId();
                 if (radioBtns == Integer.parseInt(String.valueOf(qList.get(numlist.get(count)).get(5)))) {
                     finalScore++;
                 }
-                if (count <= 3) {
+                if (count <= 4) {
                     count++;
-                    loadquestion(view);
+                    loadquestion(view1);
 
-                }else {
-                    System.out.println(finalScore);
-                    // send score to score fragment of game A
-                    Bundle args = new Bundle();
-                    args.putInt("gameAScore", finalScore);
+                }
+                if (count == 4)
+                    {
 
-                    Score score = new Score();
-                    ScoreDBHandler dbHandler = new ScoreDBHandler(getContext(), null, null, 1);
-                    score = new Score(finalScore + "/" + 5, 2);
+                    view1.findViewById(R.id.Nextq_button).setVisibility(View.GONE);
+                    view1.findViewById(R.id.gotoscorebutton).setVisibility(View.VISIBLE);
 
-                    if (dbHandler.isExisted(2)){
-                        dbHandler.deleteScore(2);
-                    }
-                    dbHandler.addScore(score);
-
-                    Navigation.findNavController(view).navigate(R.id.action_gameAFragment_to_gameAScoreFragment, args);
                 }
             }
         }
         );
+        view1.findViewById(R.id.gotoscorebutton).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                System.out.println(finalScore);
+                    // send score to score fragment of game A
+                Bundle args = new Bundle();
+                args.putInt("gameAScore", finalScore);
+
+                Score score = new Score();
+                ScoreDBHandler dbHandler = new ScoreDBHandler(getContext(), null, null, 1);
+                score = new Score(finalScore + "/" + 5, 2);
+
+                if (dbHandler.isExisted(2)){
+                    dbHandler.deleteScore(2);
+                    }
+                dbHandler.addScore(score);
+
+                Navigation.findNavController(view).navigate(R.id.action_gameAFragment_to_gameAScoreFragment, args);
+
+            }
+
+        });
+
 
     }
 }
