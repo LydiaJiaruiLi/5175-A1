@@ -2,9 +2,7 @@ package com.example.assignment1;
 
 import android.graphics.Color;
 import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +11,6 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -21,24 +18,7 @@ import java.util.Map;
 import java.util.Random;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link GameAFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-
 public class GameAFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-
     TextView showQuestionTextView;
     RadioButton showselect1;
     RadioButton showselect2;
@@ -50,12 +30,12 @@ public class GameAFragment extends Fragment {
     ArrayList numlist = new ArrayList();
 
     //    generate question set
-    private ArrayList<String> Q1 = new ArrayList(Arrays.asList("What is moon?", "A Satellite", "A Star", "A Planet", "A Meteor", 1));
-    private ArrayList<String> Q2 = new ArrayList(Arrays.asList("What is tulip?", "A type of food", "An animal", "A flower", "A Star", 3));
-    private ArrayList<String> Q3 = new ArrayList(Arrays.asList("45+65=?", "115", "100", "120", "110", 4));
-    private ArrayList<String> Q4 = new ArrayList(Arrays.asList("Where do swans live?", "In dessert", "In mountains", "In lakes", "In forest", 3));
-    private ArrayList<String> Q5 = new ArrayList(Arrays.asList("Where is China?", "Europe", "Asia", "Africa", "North America", 2));
-    private ArrayList<String> Q6 = new ArrayList(Arrays.asList("45*5=?", "225", "215", "235", "245", 1));
+    private ArrayList<String> Q1 = new ArrayList(Arrays.asList("What is moon?", "A Satellite", "A Star", "A Planet", "A Meteor", 2131231175));
+    private ArrayList<String> Q2 = new ArrayList(Arrays.asList("What is tulip?", "A type of food", "An animal", "A flower", "A Star", 2131231177));
+    private ArrayList<String> Q3 = new ArrayList(Arrays.asList("45+65=?", "115", "100", "120", "110", 2131231178));
+    private ArrayList<String> Q4 = new ArrayList(Arrays.asList("Where do swans live?", "In dessert", "In mountains", "In lakes", "In forest", 2131231177));
+    private ArrayList<String> Q5 = new ArrayList(Arrays.asList("Where is China?", "Europe", "Asia", "Africa", "North America", 2131231176));
+    private ArrayList<String> Q6 = new ArrayList(Arrays.asList("45*5=?", "225", "215", "235", "245", 2131231175));
     private Map<Integer, List> qList = Map.of(0, Q1, 1, Q2, 2, Q3, 3, Q4, 4, Q5,5,Q6);
     private ArrayList<String> colorlst = new ArrayList(Arrays.asList("#A11111", "#B2A11111", "#95FF5722", "#C4FF5722", "#FFFF5722"));
 
@@ -89,6 +69,7 @@ public class GameAFragment extends Fragment {
         //      set backgroud color
         String color = colorlst.get(count);
         view.setBackgroundColor(Color.parseColor(color));
+
     }
 
     @Override
@@ -106,7 +87,6 @@ public class GameAFragment extends Fragment {
         radgroup = first_questionLayout.findViewById(R.id.main_radiogroup);
 
         return first_questionLayout;
-
     }
 
     public void onViewCreated(@NonNull View view1, Bundle savedInstanceState) {
@@ -123,28 +103,28 @@ public class GameAFragment extends Fragment {
                 if (count <= 4) {
                     count++;
                     loadquestion(view1);
-
+                    radgroup.clearCheck();
                 }
                 if (count == 4)
                     {
-
                     view1.findViewById(R.id.Nextq_button).setVisibility(View.GONE);
                     view1.findViewById(R.id.gotoscorebutton).setVisibility(View.VISIBLE);
-
                 }
             }
         }
         );
         view1.findViewById(R.id.gotoscorebutton).setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                System.out.println(finalScore);
+                int radioBtns = radgroup.getCheckedRadioButtonId();
+                if (radioBtns == Integer.parseInt(String.valueOf(qList.get(numlist.get(count)).get(5)))) {
+                    finalScore++;
+                }
                     // send score to score fragment of game A
                 Bundle args = new Bundle();
                 args.putInt("gameAScore", finalScore);
 
-                Score score = new Score();
                 ScoreDBHandler dbHandler = new ScoreDBHandler(getContext(), null, null, 1);
-                score = new Score(finalScore + "/" + 5, 2);
+                Score score = new Score(finalScore + "/" + 5, 2);
 
                 if (dbHandler.isExisted(2)){
                     dbHandler.deleteScore(2);
@@ -152,11 +132,7 @@ public class GameAFragment extends Fragment {
                 dbHandler.addScore(score);
 
                 Navigation.findNavController(view).navigate(R.id.action_gameAFragment_to_gameAScoreFragment, args);
-
             }
-
         });
-
-
     }
 }
