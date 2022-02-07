@@ -10,11 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link GameAScoreFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class GameAScoreFragment extends Fragment {
     int gameAScore = 0;
 
@@ -28,7 +23,6 @@ public class GameAScoreFragment extends Fragment {
         if (input != null) {
             gameAScore = input.getInt("gameAScore");
         }
-
         return gameALayout;
     }
 
@@ -42,7 +36,7 @@ public class GameAScoreFragment extends Fragment {
         view.findViewById(R.id.return_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Navigation.findNavController(view).navigate(R.id.action_gameAFragmentScore_to_secondFragment);
+                Navigation.findNavController(view).navigate(R.id.action_gameAScoreFragment_to_secondFragment);
             }
         });
 

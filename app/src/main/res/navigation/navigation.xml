@@ -67,5 +67,9 @@
     <fragment
         android:id="@+id/gameAScoreFragment"
         android:name="com.example.assignment1.GameAScoreFragment"
-        android:label="GameAScoreFragment" />
+        android:label="GameAScoreFragment" >
+        <action
+            android:id="@+id/action_gameAScoreFragment_to_secondFragment"
+            app:destination="@id/secondFragment" />
+    </fragment>
 </navigation>
