@@ -31,7 +31,11 @@
         android:id="@+id/gameAFragment"
         android:name="com.example.assignment1.GameAFragment"
         android:label="fragment_game_a"
-        tools:layout="@layout/fragment_game_a" />
+        tools:layout="@layout/fragment_game_a" >
+        <action
+            android:id="@+id/action_gameAFragment_to_gameAScoreFragment"
+            app:destination="@id/gameAScoreFragment" />
+    </fragment>
     <fragment
         android:id="@+id/gameBFragment"
         android:name="com.example.assignment1.GameBFragment"
@@ -59,5 +63,13 @@
         <action
             android:id="@+id/action_gameBAnswerFragment_to_gameBScoreFragment"
             app:destination="@id/gameBScoreFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/gameAScoreFragment"
+        android:name="com.example.assignment1.GameAScoreFragment"
+        android:label="GameAScoreFragment" >
+        <action
+            android:id="@+id/action_gameAScoreFragment_to_secondFragment"
+            app:destination="@id/secondFragment" />
     </fragment>
 </navigation>

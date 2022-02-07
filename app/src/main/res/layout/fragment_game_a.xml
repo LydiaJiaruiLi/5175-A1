@@ -68,7 +68,22 @@
         android:text="@string/Nextq_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.513"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/main_radiogroup" />
+        app:layout_constraintTop_toBottomOf="@+id/main_radiogroup"
+        app:layout_constraintVertical_bias="0.373" />
+
+    <Button
+        android:id="@+id/gotoscorebutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Score"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.513"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/main_radiogroup"
+        app:layout_constraintVertical_bias="0.373"
+        tools:visibility="gone" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
