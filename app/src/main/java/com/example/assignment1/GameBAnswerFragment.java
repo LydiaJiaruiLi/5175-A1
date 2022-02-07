@@ -112,10 +112,8 @@ public class GameBAnswerFragment extends Fragment implements View.OnClickListene
 
         if (dbHandler.isExisted(1)){
             dbHandler.deleteScore(1);
-            dbHandler.addScore(score);
         }
-
-
+        dbHandler.addScore(score);
         Navigation.findNavController(view).navigate(R.id.action_gameBAnswerFragment_to_gameBScoreFragment, args);
     }
 
