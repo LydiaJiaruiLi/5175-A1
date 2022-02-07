@@ -157,7 +157,21 @@ public class GameAFragment extends Fragment {
                     loadquestion(view);
 
                 }else {
-                    Navigation.findNavController(view).navigate(R.id.action_gameAFragment_to_gameAFragmentScore);
+                    System.out.println(finalScore);
+                    // send score to score fragment of game A
+                    Bundle args = new Bundle();
+                    args.putInt("gameAScore", finalScore);
+
+                    Score score = new Score();
+                    ScoreDBHandler dbHandler = new ScoreDBHandler(getContext(), null, null, 1);
+                    score = new Score(finalScore + "/" + 5, 2);
+
+                    if (dbHandler.isExisted(2)){
+                        dbHandler.deleteScore(2);
+                    }
+                    dbHandler.addScore(score);
+
+                    Navigation.findNavController(view).navigate(R.id.action_gameAFragment_to_gameAScoreFragment, args);
                 }
             }
         }
