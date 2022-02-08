@@ -17,9 +17,14 @@ import androidx.navigation.Navigation;
  * Use the {@link FirstFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
+
+/*  this class is used to manage the content of the welcome page. In this fragment, it displays a
+    University of Ottawa logo, a text of "Welcome to Jiarui Li and Qihui Wang's game" and a OK button
+    of moving to the next page.
+*/
 public class FirstFragment extends Fragment implements View.OnClickListener {
 
-    Button OkButton;
+    Button OkButton; // OK button in fragment
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -68,14 +73,17 @@ public class FirstFragment extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_first, container, false);
 
+        // add a click listener on the OK button
         OkButton = view.findViewById(R.id.StartButton);
         OkButton.setOnClickListener(this);
 
         return view;
     }
 
+    // move to next if the OK button was clicked.
     @Override
     public void onClick(View view){
+        // move to next fragment by using Navigation.
         Navigation.findNavController(view).navigate(R.id.action_firstFragment_to_secondFragment);
     }
 }

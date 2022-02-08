@@ -20,14 +20,22 @@ import java.util.Random;
  * Use the {@link GameBFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
+
+/*
+    This class is used to manage the content of the first page of game B. In this fragment, it
+    has a "START" button on the bottom of page. If the button is clicked, it will start to show a
+    animal picture for a random time between 1-3 seconds at the random position in 1 minute. After
+    1 minute, it will jump to next screen and ask the user enter an integer as the number of
+    animals the user has seen.
+ */
 public class GameBFragment extends Fragment implements View.OnClickListener {
 
-    private ImageView imageView = null;
-    private FrameLayout fr = null;
-    private int imgFrameWidth;
-    private int imgFrameHeight;
-    private int imgWidth;
-    private int imgHeight;
+    private ImageView imageView = null; // the image view
+    private FrameLayout fr = null; // the image frame
+    private int imgFrameWidth; // the width of image frame
+    private int imgFrameHeight; // the height of image frame
+    private int imgWidth; // the width of image
+    private int imgHeight; // the height of image
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -76,29 +84,31 @@ public class GameBFragment extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_game_b, container, false);
 
+        // Add a click listener on the "START" button
         view.findViewById(R.id.StartGameBButton).setOnClickListener(this);
 
+        // Get the width and height of the animal image
         imageView = (ImageView) view.findViewById(R.id.animalImageView);
+        imgWidth = imageView.getDrawable().getIntrinsicWidth();
+        imgHeight = imageView.getDrawable().getIntrinsicHeight();
 
+        // Get the width and height of the whole image frame
         fr = (FrameLayout) view.findViewById(R.id.imageFrame);
         imgFrameWidth = fr.getLayoutParams().width;
         imgFrameHeight = fr.getLayoutParams().height;
 
-        imgWidth = imageView.getDrawable().getIntrinsicWidth();
-        imgHeight = imageView.getDrawable().getIntrinsicHeight();
-
         return view;
     }
 
-    int counter;
-    boolean stop;
+    int counter; // a counter used to count the number of images has been shown.
+    boolean stop; // a flag to identify the stop position
     @Override
     public void onClick(View view){
         counter = 1;
         stop = false;
         displayAnimal();
 
-        // move to score page after 1 minutes
+        // move to score page after 1 minute
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -106,25 +116,28 @@ public class GameBFragment extends Fragment implements View.OnClickListener {
                 System.out.println(counter);
                 moveToAnswerPage(view, counter);
             }
-        }, 4000);
-
+        }, 60000); // delay to show next page after 1 minute
     }
 
+    // This function is used to display images at random positions on the screen
     private void displayAnimal(){
-
+        // Make the image visible
         imageView.setVisibility(View.VISIBLE);
-        Random random = new Random();
-
-        int min = 1;
-        int max = 3;
 
         // random generate 1-3 seconds
+        Random random = new Random();
+        int min = 1;
+        int max = 3;
         int randomTimer = random.nextInt((max - min) + 1) + min;
 
+        // Generate a random position for image
         int randomPosX = random.nextInt(imgFrameWidth - imgWidth);
         int randomPosY = random.nextInt(imgFrameHeight - imgHeight);
+        // Set the image position into generated random numbers
         imageView.setX(randomPosX);
         imageView.setY(randomPosY);
+
+        // Display the image 1-3 seconds each time
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -139,12 +152,11 @@ public class GameBFragment extends Fragment implements View.OnClickListener {
         }, randomTimer * 1000);
     }
 
+    // This function is used to move and send the number of image has been shown to next fragment
     private void moveToAnswerPage(View view, int actualAmount){
         Bundle actual = new Bundle();
         actual.putInt("actualAmount", actualAmount);
 
         Navigation.findNavController(view).navigate(R.id.action_gameBFragment_to_gameBAnswerFragment, actual);
-
     }
-
 }

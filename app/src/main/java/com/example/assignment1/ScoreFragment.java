@@ -16,6 +16,12 @@ import android.widget.TextView;
  * Use the {@link ScoreFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
+
+/*
+    This class is used to manage the content in score page. In this fragment, it will shows the last
+    scores both of game A and game B. Due to the use of SQLite, it will show the last score even if
+    the user exits this app.
+ */
 public class ScoreFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
@@ -49,8 +55,8 @@ public class ScoreFragment extends Fragment {
         return fragment;
     }
 
-    String gameBScore;
-    String gameAScore;
+    String gameBScore; // A string to show the score of game B.
+    String gameAScore; // A string to show the score of game A.
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,22 +65,22 @@ public class ScoreFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-
+        // Read the content from database we created.
         ScoreDBHandler dbHandler = new ScoreDBHandler(this.getContext(), null, null, 1);
 
-
+        // Get the score of game B
         if (dbHandler.isExisted(1)) {
             gameBScore = dbHandler.findScoreByGameId(1).getGameScore();
         }else{
             gameBScore = "0/0";
         }
 
+        // Get the score of game A
         if (dbHandler.isExisted(2)) {
             gameAScore = dbHandler.findScoreByGameId(2).getGameScore();
         }else{
             gameAScore = "0/0";
         }
-
     }
 
     @Override
@@ -83,9 +89,11 @@ public class ScoreFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_score, container, false);
 
+        // Get the text view of showing the scores of B and game A by using the ids set in fragment_score.xml
         TextView BScoreTextView = view.findViewById(R.id.scoreB);
         TextView AScoreTextView = view.findViewById(R.id.scoreA);
 
+        // Show the scores of game A and game B
         BScoreTextView.setText(gameBScore);
         AScoreTextView.setText(gameAScore);
 
@@ -96,5 +104,4 @@ public class ScoreFragment extends Fragment {
     public void onResume(){
         super.onResume();
     }
-
 }

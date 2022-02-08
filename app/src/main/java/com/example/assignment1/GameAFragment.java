@@ -17,7 +17,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-
+/*
+    This class is used to manage the game A's fragment, which displays random 5 questions in 5 screen
+    with different background colors. In this fragment, the user is allowed to select a answer for
+    each question. And it will move to next question if "NEXT" button is clicked. After displayed 5
+    questions, it will move to a new page.
+ */
 public class GameAFragment extends Fragment {
     TextView showQuestionTextView;
     RadioButton showselect1;
@@ -25,19 +30,14 @@ public class GameAFragment extends Fragment {
     RadioButton showselect3;
     RadioButton showselect4;
     RadioGroup radgroup;
-    int finalScore = 0;
     int count = 0;
     ArrayList numlist = new ArrayList();
 
-    //    generate question set
-    private ArrayList<String> Q1 = new ArrayList(Arrays.asList("What is moon?", "A Satellite", "A Star", "A Planet", "A Meteor", 2131231175));
-    private ArrayList<String> Q2 = new ArrayList(Arrays.asList("What is tulip?", "A type of food", "An animal", "A flower", "A Star", 2131231177));
-    private ArrayList<String> Q3 = new ArrayList(Arrays.asList("45+65=?", "115", "100", "120", "110", 2131231178));
-    private ArrayList<String> Q4 = new ArrayList(Arrays.asList("Where do swans live?", "In dessert", "In mountains", "In lakes", "In forest", 2131231177));
-    private ArrayList<String> Q5 = new ArrayList(Arrays.asList("Where is China?", "Europe", "Asia", "Africa", "North America", 2131231176));
-    private ArrayList<String> Q6 = new ArrayList(Arrays.asList("45*5=?", "225", "215", "235", "245", 2131231175));
-    private Map<Integer, List> qList = Map.of(0, Q1, 1, Q2, 2, Q3, 3, Q4, 4, Q5,5,Q6);
     private ArrayList<String> colorlst = new ArrayList(Arrays.asList("#A11111", "#B2A11111", "#95FF5722", "#C4FF5722", "#FFFF5722"));
+
+    // Get the map of questions from class QuestionStorage
+    QuestionStorage questionStorage = new QuestionStorage();
+    Map<Integer, Question> qList = questionStorage.getQuestionList();
 
     private void loadquestion(View view) {
         if (count >= 5) {
@@ -47,29 +47,32 @@ public class GameAFragment extends Fragment {
         Random rand = new Random();
         int randInt = 0;
         boolean[] bool = new boolean[6];
-        for (int i = 0; i < 5; i++) {
-            do {
-                randInt = rand.nextInt(6);
-            } while (bool[randInt]);
-            bool[randInt] = true;
-            numlist.add(randInt);
-        }
-        //        random select quesiton
-        String question_text = String.format("%s. %s", (count + 1), qList.get(numlist.get(count)).get(0));
+
+        do {
+            randInt = rand.nextInt(6);
+        } while (bool[randInt]);
+        bool[randInt] = true;
+        numlist.add(randInt);
+
+        // random select quesiton
+        String question_text = String.format("%s. %s", (count + 1), qList.get(numlist.get(count)).getQuestion());
         showQuestionTextView.setText(question_text);
 
-        String select1 = qList.get(numlist.get(count)).get(1).toString();
+        // Get the corresponding choices of the generated question
+        List<String> answers = qList.get(numlist.get(count)).getAnswers();
+
+        String select1 = answers.get(0);
         showselect1.setText(select1);
-        String select2 = qList.get(numlist.get(count)).get(2).toString();
+        String select2 = answers.get(1);
         showselect2.setText(select2);
-        String select3 = qList.get(numlist.get(count)).get(3).toString();
+        String select3 = answers.get(2);
         showselect3.setText(select3);
-        String select4 = qList.get(numlist.get(count)).get(4).toString();
+        String select4 = answers.get(3);
         showselect4.setText(select4);
-        //      set backgroud color
+
+        // set backgroud color
         String color = colorlst.get(count);
         view.setBackgroundColor(Color.parseColor(color));
-
     }
 
     @Override
@@ -89,47 +92,49 @@ public class GameAFragment extends Fragment {
         return first_questionLayout;
     }
 
+    String input = ""; // the index of user selected
+    String questionId = ""; // the ids of generated questions
     public void onViewCreated(@NonNull View view1, Bundle savedInstanceState) {
         super.onViewCreated(view1, savedInstanceState);
         view1.findViewById(R.id.Nextq_button).setVisibility(View.VISIBLE);
         view1.findViewById(R.id.gotoscorebutton).setVisibility(View.GONE);
 
         view1.findViewById(R.id.Nextq_button).setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                int radioBtns = radgroup.getCheckedRadioButtonId();
-                if (radioBtns == Integer.parseInt(String.valueOf(qList.get(numlist.get(count)).get(5)))) {
-                    finalScore++;
-                }
-                if (count <= 4) {
-                    count++;
-                    loadquestion(view1);
-                    radgroup.clearCheck();
-                }
-                if (count == 4)
-                    {
-                    view1.findViewById(R.id.Nextq_button).setVisibility(View.GONE);
-                    view1.findViewById(R.id.gotoscorebutton).setVisibility(View.VISIBLE);
-                }
-            }
-        }
+                 public void onClick(View view) {
+                     // Get the index of the user clicked
+                     int radioBtns = radgroup.getCheckedRadioButtonId();
+                     View radButton = radgroup.findViewById(radioBtns);
+                     int idx = radgroup.indexOfChild(radButton);
+                     input += idx + " ";
+
+                     if (count <= 4) {
+                         count++;
+                         loadquestion(view1);
+                         radgroup.clearCheck();
+                     }
+                     if (count == 4)
+                     {
+                         view1.findViewById(R.id.Nextq_button).setVisibility(View.GONE);
+                         view1.findViewById(R.id.gotoscorebutton).setVisibility(View.VISIBLE);
+                     }
+                 }
+             }
         );
         view1.findViewById(R.id.gotoscorebutton).setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 int radioBtns = radgroup.getCheckedRadioButtonId();
-                if (radioBtns == Integer.parseInt(String.valueOf(qList.get(numlist.get(count)).get(5)))) {
-                    finalScore++;
+                View radButton = radgroup.findViewById(radioBtns);
+                int idx = radgroup.indexOfChild(radButton);
+                input += idx;
+
+                for (int i = 0; i < numlist.size(); i++){
+                    questionId += numlist.get(i) + " ";
                 }
-                    // send score to score fragment of game A
+
+                // send score to score fragment of game A
                 Bundle args = new Bundle();
-                args.putInt("gameAScore", finalScore);
-
-                ScoreDBHandler dbHandler = new ScoreDBHandler(getContext(), null, null, 1);
-                Score score = new Score(finalScore + "/" + 5, 2);
-
-                if (dbHandler.isExisted(2)){
-                    dbHandler.deleteScore(2);
-                    }
-                dbHandler.addScore(score);
+                args.putString("gameAInput", input);
+                args.putString("gameAQuestionId", questionId);
 
                 Navigation.findNavController(view).navigate(R.id.action_gameAFragment_to_gameAScoreFragment, args);
             }

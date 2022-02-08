@@ -26,6 +26,8 @@
         android:layout_width="266dp"
         android:layout_height="230dp"
         android:layout_marginTop="156dp"
+        android:layout_marginBottom="111dp"
+        app:layout_constraintBottom_toTopOf="@+id/Nextq_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
@@ -34,21 +36,21 @@
         <RadioButton
             android:id="@+id/Select1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="55dp"
             android:text="RadioButton"
             android:textSize="20sp" />
 
         <RadioButton
             android:id="@+id/Select2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="55dp"
             android:text="RadioButton"
             android:textSize="20sp" />
 
         <RadioButton
             android:id="@+id/Select3"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="55dp"
             android:text="RadioButton"
             android:textSize="20sp" />
 
@@ -56,7 +58,7 @@
         <RadioButton
             android:id="@+id/Select4"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="55dp"
             android:text="RadioButton"
             android:textSize="20sp" />
     </RadioGroup>
@@ -68,7 +70,7 @@
         android:text="@string/Nextq_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.513"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/main_radiogroup"
         app:layout_constraintVertical_bias="0.373"

@@ -15,11 +15,15 @@ import android.widget.Button;
  * Use the {@link SecondFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
+
+/*
+    This class is used to manage the second fragment, which has four buttons. If the first button,
+    "GAME A" button was clicked, it will start a new game A. The second button, "GAME B" button is
+    used to jump to game B. If the user hits The "SHOW SCORE" button, it will move to a screen of
+    showing the last scores of game A and game B. And the "BACK TO WELCOME" button is used to go back
+    to the welcome page.
+ */
 public class SecondFragment extends Fragment implements View.OnClickListener{
-//    Button buttonA;
-//    Button buttonB;
-//    Button buttonScore;
-//    Button buttonBack;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -67,27 +71,34 @@ public class SecondFragment extends Fragment implements View.OnClickListener{
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_second, container, false);
 
+        // Add click listener to each button by searching id which was set in fragment_second.xml.
         view.findViewById(R.id.GameAButton).setOnClickListener(this);
         view.findViewById(R.id.GameBButton).setOnClickListener(this);
         view.findViewById(R.id.ScoreButton).setOnClickListener(this);
         view.findViewById(R.id.BackButton).setOnClickListener(this);
+
         return view;
     }
 
     @Override
     public void onClick(View view){
+        // Move to corresponding fragment when a button is clicked using Navigation.
         switch (view.getId()){
             case R.id.GameAButton:
+                // Jump to game A's fragment if the "GAME A" button is clicked.
                 Navigation.findNavController(view).navigate(R.id.action_secondFragment_to_gameAFragment);
                 break;
             case R.id.GameBButton:
+                // Jump to game B's fragment if the "GAME B" button is clicked.
                 Navigation.findNavController(view).navigate(R.id.action_secondFragment_to_gameBFragment);
                 break;
             case R.id.ScoreButton:
+                // Jump to score fragment if the "SHOW SCORE" button is clicked.
                 Navigation.findNavController(view).navigate(R.id.action_secondFragment_to_scoreFragment);
                 break;
             case R.id.BackButton:
-                Navigation.findNavController(view).popBackStack();
+                // Jump to welcome page if the "BACK TO WELCOME" button is clicked.
+                Navigation.findNavController(view).navigate(R.id.action_secondFragment_to_firstFragment);
         }
 
     }

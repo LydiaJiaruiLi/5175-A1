@@ -19,8 +19,16 @@ import android.widget.TextView;
  * Use the {@link GameBAnswerFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
+
+/*
+    This class is used to manage the content of fragment which asks the user how many animals has
+    has been seen in the last screen. In this fragment, it displays a message "How many animals did
+    you see?", and a underline that provides a input when it is clicked. And if click the "OK"
+    button on the screen, it will move to next fragment. Entering nothing is provided in this case,
+    if the user did this, the score will be 0.
+ */
 public class GameBAnswerFragment extends Fragment implements View.OnClickListener{
-    EditText userInput;
+    EditText userInput; // the user input
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -53,9 +61,7 @@ public class GameBAnswerFragment extends Fragment implements View.OnClickListene
         return fragment;
     }
 
-    int actualAmount;
-    private FragmentManager fm;
-    private FragmentTransaction ft;
+    int actualAmount; // the number of animals has been shown in the last screen
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,11 +70,11 @@ public class GameBAnswerFragment extends Fragment implements View.OnClickListene
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
+        // Receive the data sent (the number of actual images shown) from other fragments
         Bundle actual = getArguments();
         if (actual != null) {
             actualAmount = actual.getInt("actualAmount");
         }
-
     }
 
     @Override
@@ -77,31 +83,28 @@ public class GameBAnswerFragment extends Fragment implements View.OnClickListene
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_game_b_answer, container, false);
 
+        // Add a listener on the "OK" button
         view.findViewById(R.id.gameBScoreButton).setOnClickListener(this);
+        // Get the content of user entered
         userInput = (EditText) view.findViewById(R.id.userInput);
 
         return view;
-
-
     }
 
     @Override
     public void onClick(View view){
+        // Send the user input and the actual number of animals shown to the next fragment that shows the score of game B
         Bundle args = new Bundle();
         if (userInput.getText() != null) {
             args.putInt("userInput", Integer.parseInt(userInput.getText().toString()));
             args.putInt("actualAmount", actualAmount);
         }else{
+            // The user input is set to 0 if nothing input provided
             args.putInt("userInput", 0);
             args.putInt("actualAmount", actualAmount);
         }
 
-////        newFrg.setArguments(input); //data being send to SecondFragment
-//        Intent intent = new Intent(getActivity(), ScoreTrans.class);
-//        intent.putExtra("actualAmount", actualAmount);
-//        intent.putExtra("userInput", Integer.parseInt(userInput.getText().toString()));
-//        startActivity(intent);
-
+        // Send the score to database
         Score score = new Score();
         ScoreDBHandler dbHandler = new ScoreDBHandler(this.getContext(), null, null, 1);
         if (userInput.getText() != null){
@@ -110,11 +113,13 @@ public class GameBAnswerFragment extends Fragment implements View.OnClickListene
             score = new Score(0 + "/" + actualAmount, 1);
         }
 
+        // Overwrite the game B's score
         if (dbHandler.isExisted(1)){
             dbHandler.deleteScore(1);
         }
         dbHandler.addScore(score);
+
+        // Move to next fragment
         Navigation.findNavController(view).navigate(R.id.action_gameBAnswerFragment_to_gameBScoreFragment, args);
     }
-
 }

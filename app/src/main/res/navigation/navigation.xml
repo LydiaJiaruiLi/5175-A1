@@ -26,6 +26,9 @@
         <action
             android:id="@+id/action_secondFragment_to_scoreFragment"
             app:destination="@id/scoreFragment" />
+        <action
+            android:id="@+id/action_secondFragment_to_firstFragment"
+            app:destination="@id/firstFragment" />
     </fragment>
     <fragment
         android:id="@+id/gameAFragment"
@@ -54,7 +57,11 @@
         android:id="@+id/gameBScoreFragment"
         android:name="com.example.assignment1.GameBScoreFragment"
         android:label="fragment_game_b_score"
-        tools:layout="@layout/fragment_game_b_score" />
+        tools:layout="@layout/fragment_game_b_score" >
+        <action
+            android:id="@+id/action_gameBScoreFragment_to_secondFragment"
+            app:destination="@id/secondFragment" />
+    </fragment>
     <fragment
         android:id="@+id/gameBAnswerFragment"
         android:name="com.example.assignment1.GameBAnswerFragment"

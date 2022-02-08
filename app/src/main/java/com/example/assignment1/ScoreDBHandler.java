@@ -6,6 +6,9 @@ import android.content.Context;
 import android.content.ContentValues;
 import android.database.Cursor;
 
+/*
+    This class is used to manage the SQLite database.
+ */
 public class ScoreDBHandler extends SQLiteOpenHelper{
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "scoreDB.db";
@@ -32,6 +35,7 @@ public class ScoreDBHandler extends SQLiteOpenHelper{
         onCreate(db);
     }
 
+    // Clear the databse
     public void clearDatabase() {
         SQLiteDatabase db = this.getWritableDatabase();
         String clearDBQuery = "DELETE FROM "+TABLE_SCORES;
@@ -45,6 +49,7 @@ public class ScoreDBHandler extends SQLiteOpenHelper{
         super(context, DATABASE_NAME, factory, DATABASE_VERSION);
     }
 
+    // Add the score to database
     public void addScore(Score score){
         ContentValues values = new ContentValues();
         values.put(COLUMN_SCORE, score.getGameScore());
@@ -56,8 +61,8 @@ public class ScoreDBHandler extends SQLiteOpenHelper{
         db.close();
     }
 
+    // Delete the score from database by using game id
     public boolean deleteScore(int gameId){
-
         String query = "DELETE FROM " + TABLE_SCORES + " WHERE " + COLUMN_GAMEID + " = " + gameId;
 
         SQLiteDatabase db = getWritableDatabase();
@@ -71,6 +76,7 @@ public class ScoreDBHandler extends SQLiteOpenHelper{
         return false;
     }
 
+    // Find the score by using game id
     public Score findScoreByGameId(int gameId) {
         String query = "SELECT * FROM " + TABLE_SCORES + " WHERE " + COLUMN_GAMEID + " = " + gameId;
         SQLiteDatabase db = this.getWritableDatabase();
@@ -89,6 +95,7 @@ public class ScoreDBHandler extends SQLiteOpenHelper{
         return score;
     }
 
+    // Check if the game's score existed by providing the game id
     public boolean isExisted(int gameId){
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "SELECT * FROM " + TABLE_SCORES + " WHERE " + COLUMN_GAMEID + " = " + gameId;

@@ -9,6 +9,9 @@ import android.os.IBinder;
 
 import androidx.annotation.Nullable;
 
+/*
+    This class is used to manage the service of playing a background music.
+ */
 public class BackgroundMusic extends Service {
     MediaPlayer mediaPlayer;
 
@@ -22,11 +25,11 @@ public class BackgroundMusic extends Service {
     public void onCreate(){
         super.onCreate();
 
+        // Play the canon as the background music
         mediaPlayer = MediaPlayer.create(this, R.raw.canon);
         mediaPlayer.setLooping(true);
         mediaPlayer.setVolume(100,100);
         mediaPlayer.start();
-
     }
 
     @Override
@@ -34,6 +37,4 @@ public class BackgroundMusic extends Service {
         mediaPlayer.stop();
         mediaPlayer.release();
     }
-
-
 }
