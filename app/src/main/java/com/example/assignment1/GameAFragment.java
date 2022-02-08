@@ -33,6 +33,7 @@ public class GameAFragment extends Fragment {
     int count = 0;
     ArrayList numlist = new ArrayList();
 
+
     private ArrayList<String> colorlst = new ArrayList(Arrays.asList("#A11111", "#B2A11111", "#95FF5722", "#C4FF5722", "#FFFF5722"));
 
     // Get the map of questions from class QuestionStorage
@@ -44,17 +45,19 @@ public class GameAFragment extends Fragment {
             return;
         }
 
-        Random rand = new Random();
-        int randInt = 0;
-        boolean[] bool = new boolean[6];
-
-        do {
-            randInt = rand.nextInt(6);
-        } while (bool[randInt]);
-        bool[randInt] = true;
-        numlist.add(randInt);
-
         // random select quesiton
+        if (count == 0){
+            Random rand = new Random();
+            int randInt = 0;
+            boolean[] bool = new boolean[10];
+            for (int i = 0; i < 5; i++) {
+                do {
+                    randInt = rand.nextInt(10);
+                } while (bool[randInt]);
+                bool[randInt] = true;
+                numlist.add(randInt);
+            }
+        }
         String question_text = String.format("%s. %s", (count + 1), qList.get(numlist.get(count)).getQuestion());
         showQuestionTextView.setText(question_text);
 
@@ -70,7 +73,7 @@ public class GameAFragment extends Fragment {
         String select4 = answers.get(3);
         showselect4.setText(select4);
 
-        // set backgroud color
+        // set background color
         String color = colorlst.get(count);
         view.setBackgroundColor(Color.parseColor(color));
     }
